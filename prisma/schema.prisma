@@ -1,0 +1,21 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// ログインテーブル
+model User {
+  id          number
+  name        string
+  email       string    @unique
+  password    string
+  createdAt   datetime  @default(now())
+  updatedAt   datetime  @updatedAt
+}
