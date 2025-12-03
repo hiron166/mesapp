@@ -13,7 +13,7 @@ datasource db {
 // ログインテーブル
 model User {
   id          number
-  name        string
+  name        string    @unique
   email       string    @unique
   password    string
   createdAt   datetime  @default(now())
