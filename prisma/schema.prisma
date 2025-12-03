@@ -1,0 +1,142 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// ログインテーブル
+model User {
+  id          number
+  name        string
+  email       string    @unique
+  password    string
+  createdAt   datetime  @default(now())
+  updatedAt   datetime  @updatedAt
+}
+
+//ライブ登録テーブル
+model LiveInfo {
+  id            number
+  day           number
+  openTime      number
+  liveName      string
+  chargePrice   int
+  ticketQuota   int
+  createdAt     datetime  @default(now())
+  updatedAt     datetime  @updatedAt
+}
+
+//共演者テーブル
+model FellowPerformer {
+  id            number
+  liveId        number
+  name          string
+  role          string
+  createdAt     datetime  @default(now())
+  updatedAt     datetime  @updatedAt
+}
+
+//出演者テーブル
+model Performer {
+  id            number
+  liveId        number
+  name          string
+  role          string
+  createdAt     datetime  @default(now())
+  updatedAt     datetime  @updatedAt
+}
+
+enum Reason {
+  PERFORMERSNS
+  FRIEND
+  TWITTER
+  FACEBOOK
+  INSTAGRAM
+  THREADS
+  WEBSITE
+  OTHER
+}
+
+//予約リストテーブル
+model Reservation {
+  id               number
+  liveId           number
+  customerName     string
+  reservationDay   number
+  method           string
+  reservationName  string
+  numberOfPeople   int
+  drink            int?
+  addP             int?
+  remarks          string?
+  reason           Reason?
+  staffId          number
+  createdAt        datetime  @default(now())
+  updatedAt        datetime  @updatedAt
+}
+
+enum Status {
+  VACANT
+  FULL
+}
+
+//座席テーブル
+model Seat {
+  id            number
+  seatName      string
+  capacity      int
+  status        Status      @default(vacant)
+  createdAt     datetime    @default(now())
+  updatedAt     datetime    @updatedAt
+}
+
+//予約リストと座席を多対多で紐づける中間テーブル
+model ReservationSeat {
+  id              number
+  reservationId   number
+  seatId          number
+  createdAt       datetime  @default(now())
+  updatedAt       datetime  @updatedAt
+}
+
+enum Type {
+  S
+  A
+  C
+  D
+}
+
+//メニューテーブル
+model Menu {
+  id              number
+  menuId          number?
+  name            string
+  type            Type
+  price           int
+  createdAt       datetime  @default(now())
+  updatedAt       datetime  @updatedAt
+}
+
+//予約リストとメニューを多対多で紐づける中間テーブル
+model ReservationMenu {
+  id              number
+  reservationId   number
+  menuId          number
+  createdAt       datetime  @default(now())
+  updatedAt       datetime  @updatedAt
+}
+
+//受付者テーブル
+model Staff {
+  id              number
+  staffId         number
+  staffName       string
+  createdAt       datetime  @default(now())
+  updatedAt       datetime  @updatedAt
+}
