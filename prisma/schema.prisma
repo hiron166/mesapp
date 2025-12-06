@@ -12,44 +12,44 @@ datasource db {
 
 // ログインテーブル
 model User {
-  id          number
-  name        string
-  email       string    @unique
-  password    string
-  createdAt   datetime  @default(now())
-  updatedAt   datetime  @updatedAt
+  id          Int       @id @default(autoincrement())
+  name        String
+  email       String    @unique
+  password    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 //ライブ登録テーブル
 model LiveInfo {
-  id            number
-  day           number
-  openTime      number
-  liveName      string
-  chargePrice   int
-  ticketQuota   int
-  createdAt     datetime  @default(now())
-  updatedAt     datetime  @updatedAt
+  id            Int       @id @default(autoincrement())
+  day           Int
+  openTime      Int
+  liveName      String
+  chargePrice   Int
+  ticketQuota   Int
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 //共演者テーブル
 model FellowPerformer {
-  id            number
-  liveId        number
-  name          string
-  role          string
-  createdAt     datetime  @default(now())
-  updatedAt     datetime  @updatedAt
+  id            Int       @id @default(autoincrement())
+  liveId        Int
+  name          String
+  role          String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 //出演者テーブル
 model Performer {
-  id            number
-  liveId        number
-  name          string
-  role          string
-  createdAt     datetime  @default(now())
-  updatedAt     datetime  @updatedAt
+  id            Int       @id @default(autoincrement())
+  liveId        Int
+  name          String
+  role          String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 enum Reason {
@@ -65,20 +65,20 @@ enum Reason {
 
 //予約リストテーブル
 model Reservation {
-  id               number
-  liveId           number
-  customerName     string
-  reservationDay   number
-  method           string
-  reservationName  string
-  numberOfPeople   int
-  drink            int?
-  addP             int?
-  remarks          string?
+  id               Int      @id @default(autoincrement())
+  liveId           Int
+  customerName     String
+  reservationDay   Int
+  method           String
+  reservationName  String
+  numberOfPeople   Int
+  drink            Int?
+  addP             Int?
+  remarks          String?
   reason           Reason?
-  staffId          number
-  createdAt        datetime  @default(now())
-  updatedAt        datetime  @updatedAt
+  staffId          Int
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 }
 
 enum Status {
@@ -88,21 +88,21 @@ enum Status {
 
 //座席テーブル
 model Seat {
-  id            number
-  seatName      string
-  capacity      int
+  id            Int         @id @default(autoincrement())
+  seatName      String
+  capacity      Int
   status        Status      @default(vacant)
-  createdAt     datetime    @default(now())
-  updatedAt     datetime    @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }
 
 //予約リストと座席を多対多で紐づける中間テーブル
 model ReservationSeat {
-  id              number
-  reservationId   number
-  seatId          number
-  createdAt       datetime  @default(now())
-  updatedAt       datetime  @updatedAt
+  id              Int       @id @default(autoincrement())
+  reservationId   Int
+  seatId          Int
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 enum Type {
@@ -114,29 +114,29 @@ enum Type {
 
 //メニューテーブル
 model Menu {
-  id              number
-  menuId          number?
-  name            string
+  id              Int       @id @default(autoincrement())
+  menuId          Int?
+  name            String
   type            Type
-  price           int
-  createdAt       datetime  @default(now())
-  updatedAt       datetime  @updatedAt
+  price           Int
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 //予約リストとメニューを多対多で紐づける中間テーブル
 model ReservationMenu {
-  id              number
-  reservationId   number
-  menuId          number
-  createdAt       datetime  @default(now())
-  updatedAt       datetime  @updatedAt
+  id              Int       @id @default(autoincrement())
+  reservationId   Int
+  menuId          Int
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 //受付者テーブル
 model Staff {
-  id              number
-  staffId         number
-  staffName       string
-  createdAt       datetime  @default(now())
-  updatedAt       datetime  @updatedAt
+  id              Int       @id @default(autoincrement())
+  staffId         Int
+  staffName       String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
