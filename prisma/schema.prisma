@@ -2,12 +2,37 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Enum定義
+enum Reason {
+  PERFORMERSNS
+  FRIEND
+  TWITTER
+  FACEBOOK
+  INSTAGRAM
+  THREADS
+  WEBSITE
+  OTHER
+}
+
+enum Status {
+  VACANT
+  FULL
+}
+
+enum Type {
+  S
+  A
+  C
+  D
 }
 
 // ログインテーブル
@@ -30,6 +55,11 @@ model LiveInfo {
   ticketQuota   Int
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  // リレーション定義
+  reservations      Reservation[]
+  fellowPerformers   FellowPerformer[]
+  performers        Performer[]
 }
 
 //共演者テーブル
@@ -40,6 +70,9 @@ model FellowPerformer {
   role          String
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  // リレーション定義
+  live             LiveInfo  @relation(fields: [liveId], references: [id], onDelete: Cascade)
 }
 
 //出演者テーブル
@@ -50,18 +83,11 @@ model Performer {
   role          String
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  // リレーション定義
+  live             LiveInfo  @relation(fields: [liveId], references: [id], onDelete: Cascade)
 }
 
-enum Reason {
-  PERFORMERSNS
-  FRIEND
-  TWITTER
-  FACEBOOK
-  INSTAGRAM
-  THREADS
-  WEBSITE
-  OTHER
-}
 
 //予約リストテーブル
 model Reservation {
@@ -79,21 +105,27 @@ model Reservation {
   staffId          Int
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
+
+  // リレーション定義
+  reservationSeats   ReservationSeat[]
+  reservationMenus   ReservationMenu[]
+
+  live             LiveInfo  @relation(fields: [liveId], references: [id], onDelete: Cascade)
+  staff            Staff     @relation(fields: [staffId], references: [staffId], onDelete: Cascade)
 }
 
-enum Status {
-  VACANT
-  FULL
-}
 
 //座席テーブル
 model Seat {
   id            Int         @id @default(autoincrement())
   seatName      String
   capacity      Int
-  status        Status      @default(vacant)
+  status        Status      @default(VACANT)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+
+  // リレーション定義
+  reservationSeats    ReservationSeat[]
 }
 
 //予約リストと座席を多対多で紐づける中間テーブル
@@ -103,13 +135,13 @@ model ReservationSeat {
   seatId          Int
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
-}
 
-enum Type {
-  S
-  A
-  C
-  D
+  // リレーション定義
+  reservation     Reservation   @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  seat            Seat          @relation(fields: [seatId], references: [id], onDelete: Cascade)
+
+  //重複防止
+  @@unique([reservationId,seatId])
 }
 
 //メニューテーブル
@@ -121,6 +153,9 @@ model Menu {
   price           Int
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+
+  // リレーション定義
+  reservationMenus   ReservationMenu[]
 }
 
 //予約リストとメニューを多対多で紐づける中間テーブル
@@ -130,13 +165,23 @@ model ReservationMenu {
   menuId          Int
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+
+  // リレーション定義
+  reservation     Reservation   @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  menu            Menu          @relation(fields: [menuId], references: [id], onDelete: Cascade)
+
+  //重複防止
+  @@unique([reservationId, menuId])
 }
 
 //受付者テーブル
 model Staff {
   id              Int       @id @default(autoincrement())
-  staffId         Int
+  staffId         Int       @unique
   staffName       String
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+
+  // リレーション定義
+  reservations      Reservation[]
 }
