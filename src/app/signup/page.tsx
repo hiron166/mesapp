@@ -1,9 +1,11 @@
 "use client";
 
 import { supabase } from "@/utils/supabase";
-// import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { SignupFormData } from "../_types/SignupFormData";
+import { SignupLoginFormData } from "../_types/SignupLoginFormData";
+import InputMail from "../_components/InputMail";
+import InputPassConf from "../_components/InputPassConf";
+import InputPass from "../_components/InputPass";
 
 export default function SignupPage() {
   const {
@@ -12,9 +14,9 @@ export default function SignupPage() {
     watch,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<SignupFormData>({ mode: "onChange" });
+  } = useForm<SignupLoginFormData>({ mode: "onChange" });
 
-  const onSubmit: SubmitHandler<SignupFormData> = async (data) => {
+  const onSubmit: SubmitHandler<SignupLoginFormData> = async (data) => {
     if (data.password !== data.passwordConfirm) {
       alert("パスワードが一致しません");
       return;
@@ -35,8 +37,6 @@ export default function SignupPage() {
     }
   };
 
-  const watchPassword = watch("password");
-
   return (
     <div className="flex items-center justify-center h-screen font-sans bg-white">
       <form
@@ -46,81 +46,14 @@ export default function SignupPage() {
         <h1 className="flex justify-center text-[36px] mb-[30px] text-[#DC143C]">
           Signup
         </h1>
-        <div>
-          <label
-            htmlFor="email"
-            className="block mb-[7px] text-sm font-medium text-gray-900"
-          >
-            メールアドレス
-          </label>
-          <input
-            type="email"
-            id="email"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-[7px]"
-            placeholder="name@company.com"
-            required
-            {...register("email", {
-              required: "メールアドレスは必須です",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "有効なメールアドレスを入力してください",
-              },
-            })}
-            disabled={isSubmitting}
-          />
-          <div className="text-sm text-red-600  mb-[30px]">
-            {errors.email?.message}
-          </div>
-        </div>
-        <div>
-          <label
-            htmlFor="password"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            パスワード
-          </label>
-          <input
-            type="password"
-            id="password"
-            placeholder="••••••••"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-[7px]"
-            required
-            {...register("password", {
-              required: "パスワードは必須です",
-              minLength: {
-                value: 8,
-                message: "パスワードは8文字以上で入力してください。",
-              },
-            })}
-            disabled={isSubmitting}
-          />
-          <div className="text-sm text-red-600 mb-[30px]">
-            {errors.password?.message}
-          </div>
-        </div>
-        <div>
-          <label
-            htmlFor="password"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            パスワード（確認用）
-          </label>
-          <input
-            type="password"
-            id="password"
-            placeholder="••••••••"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-[7px]"
-            required
-            {...register("passwordConfirm", {
-              validate: (value) =>
-                value === watchPassword || "パスワードが一致しません",
-            })}
-            disabled={isSubmitting}
-          />
-          <div className="text-sm text-red-600 mb-[40px]">
-            {errors.passwordConfirm?.message}
-          </div>
-        </div>
+
+        <InputMail register={register} errors={errors} />
+        <InputPass register={register} errors={errors} />
+        <InputPassConf
+          register={register}
+          errors={errors}
+          passwordConfirm={watch}
+        />
 
         <div className="flex justify-center max-w-[300px] mx-auto">
           <button
