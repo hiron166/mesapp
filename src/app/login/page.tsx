@@ -3,9 +3,8 @@
 import { supabase } from "@/utils/supabase";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { SignupLoginFormData } from "../_types/SignupLoginFormData";
-import InputMail from "../_components/InputMail";
-import InputPass from "../_components/InputPass";
+import { AuthFormData } from "../_types/AuthFormData";
+import { InputComponent } from "../_components/Input";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,9 +13,9 @@ export default function LoginPage() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<SignupLoginFormData>({ mode: "onChange" });
+  } = useForm<AuthFormData>({ mode: "onChange" });
 
-  const onSubmit: SubmitHandler<SignupLoginFormData> = async (data) => {
+  const onSubmit: SubmitHandler<AuthFormData> = async (data) => {
     const { error } = await supabase.auth.signInWithPassword({
       email: data.email,
       password: data.password,
@@ -39,8 +38,31 @@ export default function LoginPage() {
         <h1 className="flex justify-center text-[36px] mb-[30px] text-[#DC143C]">
           Login
         </h1>
-        <InputMail register={register} errors={errors} />
-        <InputPass register={register} errors={errors} />
+        <InputComponent<AuthFormData>
+          register={register}
+          name="email"
+          title="メールアドレス"
+          placeholder="name@company.com"
+          errorMessage={errors.email?.message as string}
+          rules={{
+            required: "メールアドレスは必須です",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "有効なメールアドレスを入力してください",
+            },
+          }}
+        />
+        <InputComponent<AuthFormData>
+          register={register}
+          name="password"
+          title="パスワード"
+          placeholder="••••••••"
+          errorMessage={errors.password?.message as string}
+          inputElementProps={{ type: "password", ...register("password") }}
+          rules={{
+            required: "パスワードは必須です",
+          }}
+        />
         <div className="flex justify-center max-w-[300px] mx-auto">
           <button
             type="submit"
