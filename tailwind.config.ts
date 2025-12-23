@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Noto Sans JP"],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
