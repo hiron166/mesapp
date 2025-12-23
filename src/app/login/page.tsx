@@ -39,28 +39,37 @@ export default function LoginPage() {
           Login
         </h1>
         <InputComponent<AuthFormData>
-          register={register}
+          {...register}
           name="email"
           title="メールアドレス"
           placeholder="name@company.com"
           errorMessage={errors.email?.message as string}
-          rules={{
-            required: "メールアドレスは必須です",
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "有効なメールアドレスを入力してください",
-            },
+          inputElementProps={{
+            type: "email",
+            ...register("email", {
+              required: "メールアドレスは必須です",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "有効なメールアドレスを入力してください",
+              },
+            }),
           }}
         />
         <InputComponent<AuthFormData>
-          register={register}
+          {...register}
           name="password"
           title="パスワード"
           placeholder="••••••••"
           errorMessage={errors.password?.message as string}
-          inputElementProps={{ type: "password", ...register("password") }}
-          rules={{
-            required: "パスワードは必須です",
+          inputElementProps={{
+            type: "password",
+            ...register("password", {
+              required: "パスワードは必須です",
+              minLength: {
+                value: 8,
+                message: "パスワードは8文字以上で入力してください。",
+              },
+            }),
           }}
         />
         <div className="flex justify-center max-w-[300px] mx-auto">
