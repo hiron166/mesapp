@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  FieldValues,
-  Path,
-  RegisterOptions,
-  // UseFormRegister,
-} from "react-hook-form";
+import { FieldValues, Path, RegisterOptions } from "react-hook-form";
 import { UseFormWatch } from "react-hook-form";
 import { AuthFormData } from "../_types/AuthFormData";
 

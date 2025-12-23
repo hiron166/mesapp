@@ -4,6 +4,7 @@ import { supabase } from "@/utils/supabase";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AuthFormData } from "../_types/AuthFormData";
 import { InputComponent } from "../_components/Input";
+import { ButtonComponent } from "../_components/Button";
 
 export default function SignupPage() {
   const {
@@ -96,16 +97,11 @@ export default function SignupPage() {
           }}
           passwordConfirm={watch}
         />
-
-        <div className="flex justify-center max-w-[300px] mx-auto">
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full text-white bg-[#DC143C] hover:bg-[#DC143C]/60 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-          >
-            {isSubmitting ? "新規登録中..." : "新規登録"}
-          </button>
-        </div>
+        <ButtonComponent
+          isSubmitting={isSubmitting}
+          submittingText="新規登録中..."
+          defaultText="新規登録"
+        />
       </form>
     </div>
   );
