@@ -74,10 +74,10 @@ export default function LoginPage() {
           }}
         />
         <ButtonComponent
-        ButtonElementProps={{
-          type: "submit",
-          disabled: isSubmitting,
-        }}
+          buttonElementProps={{
+            type: "submit",
+            disabled: isSubmitting,
+          }}
           isSubmitting={isSubmitting}
           submittingText="ログイン中..."
           defaultText="ログイン"

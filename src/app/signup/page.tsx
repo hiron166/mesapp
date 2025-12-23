@@ -98,7 +98,7 @@ export default function SignupPage() {
           passwordConfirm={watch}
         />
         <ButtonComponent
-          ButtonElementProps={{
+          buttonElementProps={{
             type: "submit",
             disabled: isSubmitting,
           }}
