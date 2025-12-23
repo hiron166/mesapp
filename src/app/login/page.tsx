@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { AuthFormData } from "../_types/AuthFormData";
 import { InputComponent } from "../_components/Input";
 import { ButtonComponent } from "../_components/Button";
+import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -82,6 +83,7 @@ export default function LoginPage() {
           submittingText="ログイン中..."
           defaultText="ログイン"
         />
+        <Link href="/reset-password" className="flex justify-center underline text-sm font-medium text-gray-900 hover:text-[#DC143C] ">パスワードを忘れた方はこちら</Link>
       </form>
     </div>
   );
