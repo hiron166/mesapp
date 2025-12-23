@@ -98,6 +98,10 @@ export default function SignupPage() {
           passwordConfirm={watch}
         />
         <ButtonComponent
+          ButtonElementProps={{
+            type: "submit",
+            disabled: isSubmitting,
+          }}
           isSubmitting={isSubmitting}
           submittingText="新規登録中..."
           defaultText="新規登録"
