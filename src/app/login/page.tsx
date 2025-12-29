@@ -83,7 +83,14 @@ export default function LoginPage() {
           submittingText="ログイン中..."
           defaultText="ログイン"
         />
-        <Link href="/reset-password" className="flex justify-center underline text-sm font-medium text-gray-900 hover:text-[#DC143C] ">パスワードを忘れた方はこちら</Link>
+        <div className="text-center">
+          <Link
+            href="/reset-password"
+            className="inline-block underline text-sm font-medium text-gray-900 hover:text-[#DC143C] transition-colors duration-300"
+          >
+            パスワードを忘れた方はこちら
+          </Link>
+        </div>
       </form>
     </div>
   );
