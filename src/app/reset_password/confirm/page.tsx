@@ -1,35 +1,44 @@
 "use client";
 
 import { supabase } from "@/utils/supabase";
-import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { AuthFormData } from "../_types/AuthFormData";
-import { InputComponent } from "../_components/Input";
-import { ButtonComponent } from "../_components/Button";
-import Link from "next/link";
+import { ButtonComponent } from "@/app/_components/Button";
+import { InputComponent } from "@/app/_components/Input";
+import { AuthFormData } from "@/app/_types/AuthFormData";
+import { useRouter } from "next/navigation";
 
-export default function LoginPage() {
+export default function ResetPasswordConfirm() {
   const router = useRouter();
   const {
     register,
     handleSubmit,
+    watch,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<AuthFormData>({ mode: "onChange" });
 
   const onSubmit: SubmitHandler<AuthFormData> = async (data) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: data.email,
+    if (data.password !== data.passwordConfirm) {
+      alert("パスワードが一致しません");
+      return;
+    }
+
+    const { error } = await supabase.auth.updateUser({
       password: data.password,
     });
-
     if (error) {
-      alert("ログインに失敗しました");
+      alert("パスワードの再設定に失敗しました");
     } else {
       reset();
-      router.replace("/dashboard");
+      alert("パスワードは正常に再設定されました。");
+
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
     }
   };
+
+  const watchPassword = watch("password");
 
   return (
     <div className="flex items-center justify-center h-screen font-sans bg-white">
@@ -38,29 +47,13 @@ export default function LoginPage() {
         className="space-y-4 w-full max-w-[600px]"
       >
         <h1 className="flex justify-center text-[36px] mb-[30px] text-[#DC143C]">
-          Login
+          パスワードの再設定
         </h1>
-        <InputComponent<AuthFormData>
-          {...register}
-          name="email"
-          title="メールアドレス"
-          placeholder="name@company.com"
-          errorMessage={errors.email?.message as string}
-          inputElementProps={{
-            type: "email",
-            ...register("email", {
-              required: "メールアドレスは必須です",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "有効なメールアドレスを入力してください",
-              },
-            }),
-          }}
-        />
+
         <InputComponent<AuthFormData>
           {...register}
           name="password"
-          title="パスワード"
+          title="新しいパスワード"
           placeholder="••••••••"
           errorMessage={errors.password?.message as string}
           inputElementProps={{
@@ -74,23 +67,30 @@ export default function LoginPage() {
             }),
           }}
         />
+        <InputComponent<AuthFormData>
+          {...register}
+          name="passwordConfirm"
+          title="確認用パスワード"
+          placeholder="••••••••"
+          errorMessage={errors.passwordConfirm?.message as string}
+          inputElementProps={{
+            type: "password",
+            ...register("passwordConfirm", {
+              validate: (value) =>
+                value === watchPassword || "パスワードが一致しません",
+            }),
+          }}
+          passwordConfirm={watch}
+        />
         <ButtonComponent
           buttonElementProps={{
             type: "submit",
             disabled: isSubmitting,
           }}
           isSubmitting={isSubmitting}
-          submittingText="ログイン中..."
-          defaultText="ログイン"
+          submittingText="パスワードを再設定中..."
+          defaultText="パスワードを再設定"
         />
-        <div className="text-center">
-          <Link
-            href="/reset_password"
-            className="inline-block underline text-sm font-medium text-gray-900 hover:text-[#DC143C] transition-colors duration-300"
-          >
-            パスワードを忘れた方はこちら
-          </Link>
-        </div>
       </form>
     </div>
   );
