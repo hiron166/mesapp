@@ -48,6 +48,7 @@ export default function LoginPage() {
           errorMessage={errors.email?.message as string}
           inputElementProps={{
             type: "email",
+            disabled: isSubmitting,
             ...register("email", {
               required: "メールアドレスは必須です",
               pattern: {
@@ -65,6 +66,7 @@ export default function LoginPage() {
           errorMessage={errors.password?.message as string}
           inputElementProps={{
             type: "password",
+            disabled: isSubmitting,
             ...register("password", {
               required: "パスワードは必須です",
               minLength: {

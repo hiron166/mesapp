@@ -6,7 +6,6 @@ import { AuthFormData } from "../_types/AuthFormData";
 import { InputComponent } from "../_components/Input";
 import { ButtonComponent } from "../_components/Button";
 
-
 export default function ResetPasswordPage() {
   const {
     register,
@@ -50,6 +49,7 @@ export default function ResetPasswordPage() {
           errorMessage={errors.email?.message as string}
           inputElementProps={{
             type: "email",
+            disabled: isSubmitting,
             ...register("email", {
               required: "メールアドレスは必須です",
               pattern: {

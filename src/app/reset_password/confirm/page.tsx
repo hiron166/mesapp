@@ -58,6 +58,7 @@ export default function ResetPasswordConfirm() {
           errorMessage={errors.password?.message as string}
           inputElementProps={{
             type: "password",
+            disabled: isSubmitting,
             ...register("password", {
               required: "パスワードは必須です",
               minLength: {
@@ -75,6 +76,7 @@ export default function ResetPasswordConfirm() {
           errorMessage={errors.passwordConfirm?.message as string}
           inputElementProps={{
             type: "password",
+            disabled: isSubmitting,
             ...register("passwordConfirm", {
               validate: (value) =>
                 value === watchPassword || "パスワードが一致しません",

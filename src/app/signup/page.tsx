@@ -56,6 +56,7 @@ export default function SignupPage() {
           errorMessage={errors.email?.message as string}
           inputElementProps={{
             type: "email",
+            disabled: isSubmitting,
             ...register("email", {
               required: "メールアドレスは必須です",
               pattern: {
@@ -73,6 +74,7 @@ export default function SignupPage() {
           errorMessage={errors.password?.message as string}
           inputElementProps={{
             type: "password",
+            disabled: isSubmitting,
             ...register("password", {
               required: "パスワードは必須です",
               minLength: {
@@ -90,6 +92,7 @@ export default function SignupPage() {
           errorMessage={errors.passwordConfirm?.message as string}
           inputElementProps={{
             type: "password",
+            disabled: isSubmitting,
             ...register("passwordConfirm", {
               validate: (value) =>
                 value === watchPassword || "パスワードが一致しません",
