@@ -1,15 +1,12 @@
 "use client";
 
 import { supabase } from "@/utils/supabase";
-import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AuthFormData } from "../_types/AuthFormData";
 import { InputComponent } from "../_components/Input";
 import { ButtonComponent } from "../_components/Button";
-import Link from "next/link";
 
-export default function LoginPage() {
-  const router = useRouter();
+export default function ResetPasswordPage() {
   const {
     register,
     handleSubmit,
@@ -18,16 +15,19 @@ export default function LoginPage() {
   } = useForm<AuthFormData>({ mode: "onChange" });
 
   const onSubmit: SubmitHandler<AuthFormData> = async (data) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: data.email,
-      password: data.password,
-    });
+    if (data.password !== data.passwordConfirm) {
+      alert("パスワードが一致しません");
+      return;
+    }
 
+    const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
+      redirectTo: `http://localhost:3000/reset_password/confirm`,
+    });
     if (error) {
-      alert("ログインに失敗しました");
+      alert("送信に失敗しました");
     } else {
       reset();
-      router.replace("/dashboard");
+      alert("確認メールを送信しました。");
     }
   };
 
@@ -38,8 +38,9 @@ export default function LoginPage() {
         className="space-y-4 w-full max-w-[600px]"
       >
         <h1 className="flex justify-center text-[36px] mb-[30px] text-[#DC143C]">
-          Login
+          パスワードを忘れた場合
         </h1>
+
         <InputComponent<AuthFormData>
           {...register}
           name="email"
@@ -58,41 +59,16 @@ export default function LoginPage() {
             }),
           }}
         />
-        <InputComponent<AuthFormData>
-          {...register}
-          name="password"
-          title="パスワード"
-          placeholder="••••••••"
-          errorMessage={errors.password?.message as string}
-          inputElementProps={{
-            type: "password",
-            disabled: isSubmitting,
-            ...register("password", {
-              required: "パスワードは必須です",
-              minLength: {
-                value: 8,
-                message: "パスワードは8文字以上で入力してください。",
-              },
-            }),
-          }}
-        />
+
         <ButtonComponent
           buttonElementProps={{
             type: "submit",
             disabled: isSubmitting,
           }}
           isSubmitting={isSubmitting}
-          submittingText="ログイン中..."
-          defaultText="ログイン"
+          submittingText="送信中..."
+          defaultText="送信"
         />
-        <div className="text-center">
-          <Link
-            href="/reset_password"
-            className="inline-block underline text-sm font-medium text-gray-900 hover:text-[#DC143C] transition-colors duration-300"
-          >
-            パスワードを忘れた方はこちら
-          </Link>
-        </div>
       </form>
     </div>
   );
