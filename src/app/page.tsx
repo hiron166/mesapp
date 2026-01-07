@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
+import { TopPageButton } from "./_components/TopPageButton";
 
 export default function Home() {
   return (
@@ -23,12 +23,8 @@ export default function Home() {
         <p>感覚的に操作できる業務管理アプリです。</p>
       </div>
       <div className="flex space-x-[35px]">
-        <Link href="/login" className="top-page-button">
-          ログイン
-        </Link>
-        <Link href="/signup" className="top-page-button">
-          新規登録
-        </Link>
+        <TopPageButton buttonText="ログイン" linkHref="/login" />
+        <TopPageButton buttonText="新規登録" linkHref="/signup" />
       </div>
     </div>
   );

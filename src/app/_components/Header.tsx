@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useSupabaseSession } from "../_hooks/useSupabaseSession";
 import { supabase } from "@/utils/supabase";
 import "@/app/globals.css";
+import { HeaderLink } from "./HeaderLink";
 
 export const Header: React.FC = () => {
   const handleLogout = async () => {
@@ -21,24 +22,30 @@ export const Header: React.FC = () => {
         <div className="flex items-center gap-4">
           {session ? (
             <>
-              <Link href="/dashboard" className="header-link">
-                ダッシュボード
-              </Link>
-              <Link href="/reservation" className="header-link ml-[30px]">
-                ライブ一覧
-              </Link>
-              <button className="header-link ml-[30px]" onClick={handleLogout}>
-                ログアウト
-              </button>
+              <HeaderLink
+                headerLinkText="ダッシュボード"
+                linkHref="/dashboard"
+              />
+              <HeaderLink
+                headerLinkText="ライブ一覧"
+                linkHref="/reservation"
+                className="ml-[30px]"
+              />
+              <HeaderLink
+                headerLinkText="ログアウト"
+                linkHref="/reservation"
+                className="ml-[30px]"
+                onClick={handleLogout}
+              />
             </>
           ) : (
             <>
-              <Link href="/login" className="header-link">
-                ログイン
-              </Link>
-              <Link href="/signup" className="header-link ml-[30px]">
-                新規登録
-              </Link>
+              <HeaderLink headerLinkText="ログイン" linkHref="/login" />
+              <HeaderLink
+                headerLinkText="新規登録"
+                linkHref="/signup"
+                className="ml-[30px]"
+              />
             </>
           )}
         </div>
