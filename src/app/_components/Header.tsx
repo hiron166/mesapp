@@ -33,7 +33,7 @@ export const Header: React.FC = () => {
               />
               <HeaderLink
                 headerLinkText="ログアウト"
-                linkHref="/reservation"
+                linkHref="/"
                 className="ml-[30px]"
                 onClick={handleLogout}
               />

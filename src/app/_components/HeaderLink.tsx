@@ -27,7 +27,7 @@ export const HeaderLink = ({
   transition-colors duration-300
   underline ${className}`}
       >
-        ログアウト
+        {headerLinkText}
       </button>
     );
   }
