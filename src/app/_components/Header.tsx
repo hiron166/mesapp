@@ -13,7 +13,7 @@ export const Header: React.FC = () => {
   };
   const { session, isLoading } = useSupabaseSession();
   return (
-    <header className="flex justify-between items-center h-[75px]  px-[75px] bg-[#fff]  drop-shadow-lg">
+    <header className="flex justify-between items-center h-[75px] px-[75px] fixed top-0 left-0 w-full z-50 bg-[#fff]  drop-shadow-lg">
       <Link href="/" className="header-link">
         <Image src="/images/logo.jpg" alt="Logo" width={184} height={40} />
       </Link>
