@@ -10,13 +10,13 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #ffffff;
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--background);
+  background: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -24,12 +24,4 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-.header-link {
-  @apply font-medium
-  text-[#DC143C]
-  hover:text-[#DC143C]/50
-  transition-colors duration-300
-  underline;
 }
