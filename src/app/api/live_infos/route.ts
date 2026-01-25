@@ -25,10 +25,28 @@ type LiveInfoBody = {
 
 // POSTという命名にすることで、POSTリクエストの時にこの関数が呼ばれる
 export const POST = async (req: NextRequest) => {
-  const token = req.headers.get("Authorization") ?? "";
-  const { error } = await supabase.auth.getUser(token);
-  if (error)
-    return NextResponse.json({ status: error.message }, { status: 400 });
+  const authHeader = req.headers.get("Authorization");
+
+  // "Bearer "を削除してトークン部分だけを取得
+  const token = authHeader?.replace("Bearer ", "") ?? "";
+
+  //tokenが空の場合
+  if (!token) {
+    return NextResponse.json(
+      { status: "認証トークンが必要です" },
+      { status: 400 }
+    );
+  }
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser(token);
+  if (error || !user)
+    return NextResponse.json(
+      { status: "認証に失敗しました", error: error?.message },
+      { status: 400 }
+    );
 
   try {
     // リクエストのbodyをJSONとして取得
