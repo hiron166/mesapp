@@ -178,9 +178,16 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
         </div>
         <div></div>
         <div></div>
-        <button type="submit" disabled={isSubmitting}>
-          {mode === "new" ? "登録" : "更新"}
-        </button>
+        <div className="flex items-center gap-4">
+          <button type="submit" disabled={isSubmitting}>
+            {mode === "new" ? "登録" : "更新"}
+          </button>
+          {mode === "edit" && (
+            <button type="button" onClick={onDelete} disabled={isSubmitting}>
+              削除
+            </button>
+          )}
+        </div>
       </div>
     </form>
   );
