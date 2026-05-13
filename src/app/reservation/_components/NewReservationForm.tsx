@@ -74,119 +74,142 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
 
   return (
     <form onSubmit={onSubmit}>
-      <h1>ライブ登録</h1>
-      <div>
-        <div className="">
-          <div className="">
-            <label htmlFor="day" className="block mb-[10px]">日付</label>
-            <input
-              type="date"
-              id="day"
-              value={day}
-              onChange={(e) => setDay(Number(e.target.value))}
-              required
-              className="w-[200px] h-[50px] border-[2px] rounded-[10px] border-[#CCCCCC]"
-            />
-          </div>
-          <div>
-            <label htmlFor="openTime">開場時間</label>
-            <input
-              type="time"
-              id="openTime"
-              value={openTime}
-              onChange={(e) => setOpenTime(Number(e.target.value))}
-              required
-              className="w-[200px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px]"
-            />
-          </div>
-          <div>
-            <label htmlFor="liveName">企画名</label>
-            <input
-              type="text"
-              id="liveName"
-              value={liveName}
-              onChange={(e) => setLiveName(e.target.value)}
-              required
-              className="w-[400px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px]"
-            />
-          </div>
-          <div>
-            <label htmlFor="chargePrice">チャージ</label>
-            <div className="relative inline-block">
+      <div className="my-[30px] mx-[75px]">
+        <h1 className="text-[40px] mb-[60px]">ライブ登録</h1>
+        <div>
+          <div className="flex items-center gap-[80px] mb-[40px]">
+            <div className="">
+              <label htmlFor="day" className="block text-xl">
+                日付
+              </label>
               <input
-                type="number"
-                id="chargePrice"
-                value={chargePrice}
-                onChange={(e) => setChargePrice(Number(e.target.value))}
+                type="date"
+                id="day"
+                value={day}
+                onChange={(e) => setDay(Number(e.target.value))}
                 required
-                className="w-[400px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] pr-10"
+                className="w-[200px] h-[50px] border-[2px] rounded-[10px] border-[#CCCCCC]"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">円</span>
             </div>
-          </div>
-          <div>
-            <label htmlFor="ticketQuota">チケットノルマ</label>
-            <div className="relative inline-block">
+            <div>
+              <label htmlFor="openTime" className="block text-xl">
+                開場時間
+              </label>
               <input
-                type="number"
-                id="ticketQuota"
-                value={ticketQuota}
-                onChange={(e) => setTicketQuota(Number(e.target.value))}
+                type="time"
+                id="openTime"
+                value={openTime}
+                onChange={(e) => setOpenTime(Number(e.target.value))}
                 required
-                className="w-[400px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] pr-10"
+                className="w-[200px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px]"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">名</span>
+            </div>
+            <div>
+              <label htmlFor="liveName" className="block text-xl">
+                企画名
+              </label>
+              <input
+                type="text"
+                id="liveName"
+                value={liveName}
+                onChange={(e) => setLiveName(e.target.value)}
+                required
+                className="w-[400px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px]"
+              />
             </div>
           </div>
-          <div>
-            <label>共演者</label>
-            <div className="flex flex-col gap-2">
-              {fellowPerformers.map((performer, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    value={performer.role}
-                    onChange={(e) => updateRole(index, e.target.value)}
-                    placeholder="役割"
-                    className="w-[150px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] px-3"
-                  />
-                  <input
-                    type="text"
-                    value={performer.name}
-                    onChange={(e) => updateName(index, e.target.value)}
-                    placeholder="名前"
-                    className="w-[230px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] px-3"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removePerformer(index)}
-                    className="ml-2 text-gray-400 hover:text-red-500 text-xl leading-none"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={addPerformer}
-                className="w-[50px] h-[50px] border-[2px] border-[#CCCCCC] rounded-full text-2xl text-gray-500 hover:bg-gray-100"
-              >
-                +
-              </button>
+          <div className="flex items-start gap-[80px] mb-[40px]">
+            <div>
+              <label htmlFor="chargePrice" className="block text-xl">
+                チャージ
+              </label>
+              <div className="relative inline-block">
+                <input
+                  type="number"
+                  id="chargePrice"
+                  value={chargePrice}
+                  onChange={(e) => setChargePrice(Number(e.target.value))}
+                  required
+                  className="w-[200px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] pr-10"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">
+                  円
+                </span>
+              </div>
+            </div>
+            <div>
+              <label htmlFor="ticketQuota" className="block text-xl">
+                チケットノルマ
+              </label>
+              <div className="relative inline-block">
+                <input
+                  type="number"
+                  id="ticketQuota"
+                  value={ticketQuota}
+                  onChange={(e) => setTicketQuota(Number(e.target.value))}
+                  required
+                  className="w-[200px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] pr-10"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">
+                  名
+                </span>
+              </div>
+            </div>
+            <div>
+              <label htmlFor="fellowPerformers" className="block text-xl">
+                共演者
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {fellowPerformers.map((performer, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <div className="flex items-center w-[300px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] overflow-hidden px-3 gap-1">
+                      <input
+                        type="text"
+                        value={performer.role}
+                        onChange={(e) => updateRole(index, e.target.value)}
+                        placeholder="役割"
+                        className="w-[100px] h-full outline-none"
+                      />
+                      <span className="text-gray-400 select-none">:</span>
+                      <input
+                        type="text"
+                        value={performer.name}
+                        onChange={(e) => updateName(index, e.target.value)}
+                        placeholder="名前"
+                        className="w-[100px] flex-1 h-full outline-none"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => removePerformer(index)}
+                      className="ml-2 text-gray-400 hover:text-red-500 text-xl leading-none"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={addPerformer}
+                  className="w-[50px] h-[50px] border-[2px] border-[#CCCCCC] rounded-full text-2xl text-gray-500 hover:bg-gray-100"
+                >
+                  +
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div></div>
-        <div></div>
-        <div className="flex items-center gap-4">
-          <button type="submit" disabled={isSubmitting}>
-            {mode === "new" ? "登録" : "更新"}
-          </button>
-          {mode === "edit" && (
-            <button type="button" onClick={onDelete} disabled={isSubmitting}>
-              削除
+          <div></div>
+          <div></div>
+          <div className="flex items-center gap-4">
+            <button type="submit" disabled={isSubmitting}>
+              {mode === "new" ? "登録" : "更新"}
             </button>
-          )}
+            {mode === "edit" && (
+              <button type="button" onClick={onDelete} disabled={isSubmitting}>
+                削除
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </form>
