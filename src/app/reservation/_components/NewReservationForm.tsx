@@ -9,10 +9,10 @@ export interface FellowPerformer {
 
 interface NewReservationFormProps {
   mode: "new" | "edit";
-  day: number;
-  setDay: (day: number) => void;
-  openTime: number;
-  setOpenTime: (openTime: number) => void;
+  day: string;
+  setDay: (day: string) => void;
+  openTime: string;
+  setOpenTime: (openTime: string) => void;
   liveName: string;
   setLiveName: (liveName: string) => void;
   chargePrice: number;
@@ -48,6 +48,10 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
   onDelete,
   isSubmitting,
 }) => {
+  // 全角数字を半角数字に変換する
+  const toHalfWidth = (str: string) =>
+    str.replace(/[０-９]/g, (s) => String.fromCharCode(s.charCodeAt(0) - 0xfee0));
+
   // 指定行の役割（カンテ・ギターなど）を更新する
   const updateRole = (index: number, role: string) => {
     const updated = [...fellowPerformers];
@@ -86,9 +90,9 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                 type="date"
                 id="day"
                 value={day}
-                onChange={(e) => setDay(Number(e.target.value))}
+                onChange={(e) => setDay(e.target.value)}
                 required
-                className="w-[200px] h-[50px] border-[2px] rounded-[10px] border-[#CCCCCC]"
+                className="w-[200px] h-[50px] border-[2px] rounded-[10px] border-[#CCCCCC]  px-[10px]"
               />
             </div>
             <div>
@@ -99,9 +103,9 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                 type="time"
                 id="openTime"
                 value={openTime}
-                onChange={(e) => setOpenTime(Number(e.target.value))}
+                onChange={(e) => setOpenTime(e.target.value)}
                 required
-                className="w-[200px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px]"
+                className="w-[200px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] px-[10px]"
               />
             </div>
             <div>
@@ -114,7 +118,7 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                 value={liveName}
                 onChange={(e) => setLiveName(e.target.value)}
                 required
-                className="w-[400px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px]"
+                className="w-[400px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] px-[10px]"
               />
             </div>
           </div>
@@ -125,12 +129,16 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
               </label>
               <div className="relative inline-block">
                 <input
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   id="chargePrice"
-                  value={chargePrice}
-                  onChange={(e) => setChargePrice(Number(e.target.value))}
+                  value={chargePrice === 0 ? "" : chargePrice.toLocaleString("ja-JP")}
+                  onChange={(e) => {
+                    const val = toHalfWidth(e.target.value).replace(/[^0-9]/g, "");
+                    setChargePrice(val === "" ? 0 : Number(val));
+                  }}
                   required
-                  className="w-[200px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] pr-10"
+                  className="w-[200px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] px-[10px]"
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">
                   円
@@ -143,12 +151,16 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
               </label>
               <div className="relative inline-block">
                 <input
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   id="ticketQuota"
                   value={ticketQuota}
-                  onChange={(e) => setTicketQuota(Number(e.target.value))}
+                  onChange={(e) => {
+                    const val = toHalfWidth(e.target.value).replace(/[^0-9]/g, "");
+                    setTicketQuota(val === "" ? 0 : Number(val));
+                  }}
                   required
-                  className="w-[200px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] pr-10"
+                  className="w-[200px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] px-[10px]"
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">
                   名

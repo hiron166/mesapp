@@ -4,8 +4,8 @@ import { useState } from "react";
 import { FellowPerformer, NewReservationForm } from "../_components/NewReservationForm";
 
 export default function NewReservationPage() {
-  const [day, setDay] = useState(0);
-  const [openTime, setOpenTime] = useState(0);
+  const [day, setDay] = useState("");
+  const [openTime, setOpenTime] = useState("");
   const [liveName, setLiveName] = useState("");
   const [chargePrice, setChargePrice] = useState(0);
   const [ticketQuota, setTicketQuota] = useState(0);
