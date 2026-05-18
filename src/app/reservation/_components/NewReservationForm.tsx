@@ -7,6 +7,11 @@ export interface FellowPerformer {
   name: string;
 }
 
+export interface Performer {
+  role: string;
+  name: string;
+}
+
 interface NewReservationFormProps {
   mode: "new" | "edit";
   day: string;
@@ -21,8 +26,8 @@ interface NewReservationFormProps {
   setTicketQuota: (ticketQuota: number) => void;
   fellowPerformers: FellowPerformer[];
   setFellowPerformers: (fellowPerformers: FellowPerformer[]) => void;
-  performers: string;
-  setPerformers: (performers: string) => void;
+  performers: Performer[];
+  setPerformers: (performers: Performer[]) => void;
   onSubmit: (e: React.FormEvent) => void;
   onDelete?: () => void;
   isSubmitting: boolean;
@@ -74,6 +79,23 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
   // 指定行の共演者を削除する
   const removePerformer = (index: number) => {
     setFellowPerformers(fellowPerformers.filter((_, i) => i !== index));
+  };
+
+  // 指定行の出演者名を更新する
+  const updatePerformerName = (index: number, name: string) => {
+    const updated = [...performers];
+    updated[index] = { ...updated[index], name };
+    setPerformers(updated);
+  };
+
+  // 出演者の行を末尾に1つ追加する
+  const addPerformerItem = () => {
+    setPerformers([...performers, { role: "", name: "" }]);
+  };
+
+  // 指定行の出演者を削除する
+  const removePerformerItem = (index: number) => {
+    setPerformers(performers.filter((_, i) => i !== index));
   };
 
   return (
@@ -203,15 +225,50 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                 <button
                   type="button"
                   onClick={addPerformer}
-                  className="w-[50px] h-[50px] border-[2px] border-[#CCCCCC] rounded-full text-2xl text-gray-500 hover:bg-gray-100"
+                  className="w-[32px] h-[32px] border-[2px] border-[#CCCCCC] rounded-full text-base text-gray-500 hover:bg-gray-100 self-center"
                 >
                   +
                 </button>
               </div>
             </div>
           </div>
-          <div></div>
-          <div></div>
+          <div className="mb-[40px]">
+            <label className="block text-xl mb-2">出演者</label>
+            <div className="flex flex-wrap gap-2">
+              {performers.map((performer, index) => (
+                <div key={index} className="flex items-center">
+                  <div className="flex items-center w-[180px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] px-2 gap-1">
+                    <div className="w-6 h-6 rounded-full border-[2px] border-[#CCCCCC] flex items-center justify-center text-xs text-gray-500 shrink-0">
+                      {index + 1}
+                    </div>
+                    <input
+                      type="text"
+                      value={performer.name}
+                      onChange={(e) => updatePerformerName(index, e.target.value)}
+                      placeholder="名前"
+                      className="flex-1 w-[100px] h-full outline-none"
+                    />
+                    {index > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => removePerformerItem(index)}
+                        className="text-gray-400 hover:text-red-500 text-xl leading-none"
+                      >
+                        ×
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={addPerformerItem}
+                className="w-[32px] h-[32px] border-[2px] border-[#CCCCCC] rounded-full text-base text-gray-500 hover:bg-gray-100 self-center"
+              >
+                +
+              </button>
+            </div>
+          </div>
           <div className="flex items-center gap-4">
             <button type="submit" disabled={isSubmitting}>
               {mode === "new" ? "登録" : "更新"}

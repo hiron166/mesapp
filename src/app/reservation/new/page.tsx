@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FellowPerformer, NewReservationForm } from "../_components/NewReservationForm";
+import { FellowPerformer, Performer, NewReservationForm } from "../_components/NewReservationForm";
 
 export default function NewReservationPage() {
   const [day, setDay] = useState("");
@@ -14,7 +14,7 @@ export default function NewReservationPage() {
     { role: "ギター", name: "" },
     { role: "バイオリン", name: "" },
   ]);
-  const [performers, setPerformers] = useState("");
+  const [performers, setPerformers] = useState<Performer[]>([{ role: "", name: "" }]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
