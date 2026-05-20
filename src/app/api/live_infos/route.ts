@@ -9,10 +9,29 @@ import { supabase } from "@/utils/supabase";
 
 const prisma = new PrismaClient();
 
+export const GET = async () => {
+  try {
+    const liveInfos = await prisma.liveInfo.findMany({
+      orderBy: { day: "desc" },
+      include: {
+        reservations: true,
+        performers: true,
+        fellowPerformers: true,
+      },
+    });
+
+    return NextResponse.json(liveInfos);
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "不明なエラー";
+    return NextResponse.json({ message: errorMessage }, { status: 500 });
+  }
+};
+
 type LiveInfoBody = {
   liveInfo: {
-    day: number;
-    openTime: number;
+    day: string;
+    openTime: string;
     liveName: string;
     chargePrice: number;
     ticketQuota: number;
@@ -34,7 +53,7 @@ export const POST = async (req: NextRequest) => {
   if (!token) {
     return NextResponse.json(
       { status: "認証トークンが必要です" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -45,7 +64,7 @@ export const POST = async (req: NextRequest) => {
   if (error || !user)
     return NextResponse.json(
       { status: "認証に失敗しました", error: error?.message },
-      { status: 400 }
+      { status: 400 },
     );
 
   try {

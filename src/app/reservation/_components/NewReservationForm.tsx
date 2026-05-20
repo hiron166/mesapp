@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { ButtonComponent } from "../../_components/Button";
 
 export interface FellowPerformer {
   role: string;
@@ -55,7 +56,9 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
 }) => {
   // 全角数字を半角数字に変換する
   const toHalfWidth = (str: string) =>
-    str.replace(/[０-９]/g, (s) => String.fromCharCode(s.charCodeAt(0) - 0xfee0));
+    str.replace(/[０-９]/g, (s) =>
+      String.fromCharCode(s.charCodeAt(0) - 0xfee0),
+    );
 
   // 指定行の役割（カンテ・ギターなど）を更新する
   const updateRole = (index: number, role: string) => {
@@ -154,9 +157,14 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                   type="text"
                   inputMode="numeric"
                   id="chargePrice"
-                  value={chargePrice === 0 ? "" : chargePrice.toLocaleString("ja-JP")}
+                  value={
+                    chargePrice === 0 ? "" : chargePrice.toLocaleString("ja-JP")
+                  }
                   onChange={(e) => {
-                    const val = toHalfWidth(e.target.value).replace(/[^0-9]/g, "");
+                    const val = toHalfWidth(e.target.value).replace(
+                      /[^0-9]/g,
+                      "",
+                    );
                     setChargePrice(val === "" ? 0 : Number(val));
                   }}
                   required
@@ -178,7 +186,10 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                   id="ticketQuota"
                   value={ticketQuota}
                   onChange={(e) => {
-                    const val = toHalfWidth(e.target.value).replace(/[^0-9]/g, "");
+                    const val = toHalfWidth(e.target.value).replace(
+                      /[^0-9]/g,
+                      "",
+                    );
                     setTicketQuota(val === "" ? 0 : Number(val));
                   }}
                   required
@@ -238,13 +249,16 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
               {performers.map((performer, index) => (
                 <div key={index} className="flex items-center">
                   <div className="flex items-center w-[180px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] px-2 gap-1">
-                    <div className="w-6 h-6 rounded-full border-[2px] border-[#CCCCCC] flex items-center justify-center text-xs text-gray-500 shrink-0">
-                      {index + 1}
-                    </div>
+                    {/* 0x2460=①のUnicode。indexを足すことで①②③...と連番になる */}
+                    <span className="shrink-0 select-none text-gray-500">
+                      {String.fromCharCode(0x2460 + index)}
+                    </span>
                     <input
                       type="text"
                       value={performer.name}
-                      onChange={(e) => updatePerformerName(index, e.target.value)}
+                      onChange={(e) =>
+                        updatePerformerName(index, e.target.value)
+                      }
                       placeholder="名前"
                       className="flex-1 w-[100px] h-full outline-none"
                     />
@@ -269,12 +283,24 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
               </button>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <button type="submit" disabled={isSubmitting}>
-              {mode === "new" ? "登録" : "更新"}
-            </button>
+          <div className="flex gap-4 max-w-[200px] h-[50px] ml-auto">
+            <ButtonComponent
+              isSubmitting={isSubmitting}
+              submittingText={mode === "new" ? "登録中..." : "更新中..."}
+              defaultText={mode === "new" ? "登録" : "更新"}
+              wrapperClassName="flex gap-4 w-[200px] h-[50px] ml-auto"
+              buttonElementProps={{
+                type: "submit",
+                disabled: isSubmitting,
+              }}
+            />
             {mode === "edit" && (
-              <button type="button" onClick={onDelete} disabled={isSubmitting}>
+              <button
+                type="button"
+                onClick={onDelete}
+                disabled={isSubmitting}
+                className="w-full text-white bg-[#143fdc] hover:bg-[#143fdc]/60 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-colors duration-300"
+              >
                 削除
               </button>
             )}
