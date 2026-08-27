@@ -1,9 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { FellowPerformer, Performer, NewReservationForm } from "../_components/NewReservationForm";
+import {
+  FellowPerformer,
+  Performer,
+  NewReservationForm,
+} from "../_components/NewReservationForm";
+import { useSupabaseSession } from "@/app/_hooks/useSupabaseSession";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 export default function NewReservationPage() {
+  const { token } = useSupabaseSession();
+  const router = useRouter();
   const [day, setDay] = useState("");
   const [openTime, setOpenTime] = useState("");
   const [liveName, setLiveName] = useState("");
@@ -14,14 +23,51 @@ export default function NewReservationPage() {
     { role: "ギター", name: "" },
     { role: "バイオリン", name: "" },
   ]);
-  const [performers, setPerformers] = useState<Performer[]>([{ role: "", name: "" }]);
+  const [performers, setPerformers] = useState<Performer[]>([
+    { role: "", name: "" },
+  ]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!token) {
+      toast.error("認証トークンが必要です");
+      return;
+    }
     setIsSubmitting(true);
-    // TODO: 送信処理
-    setIsSubmitting(false);
+    try {
+      const response = await fetch("/api/live_infos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          liveInfo: {
+            day,
+            openTime,
+            liveName,
+            chargePrice,
+            ticketQuota,
+          },
+          fellowPerformers,
+          performers,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        toast.error(errorData.status || "ライブ情報の作成に失敗しました");
+        return;
+      }
+
+      toast.success("ライブ情報を作成しました");
+      router.push("/reservation");
+    } catch {
+      toast.error("ライブ情報の作成に失敗しました");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

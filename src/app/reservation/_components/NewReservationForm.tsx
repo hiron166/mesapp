@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { ButtonComponent } from "../../_components/Button";
 
 export interface FellowPerformer {
@@ -54,6 +54,18 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
   onDelete,
   isSubmitting,
 }) => {
+  // 出演者名のinput要素の参照を保持するための配列
+  const performerNameRefs = useRef<(HTMLInputElement | null)[]>([]);
+  // 行が増えた直後に追加された行のinputにフォーカスするためのref
+  const prevPerformersLength = useRef(performers.length);
+
+  //「＋」で出演者の行を追加した時に、追加された行のinputにフォーカスする
+  useEffect(() => {
+    if (performers.length > prevPerformersLength.current) {
+      performerNameRefs.current[performers.length - 1]?.focus();
+    }
+    prevPerformersLength.current = performers.length;
+  }, [performers.length]);
   // 全角数字を半角数字に変換する
   const toHalfWidth = (str: string) =>
     str.replace(/[０-９]/g, (s) =>
@@ -254,6 +266,9 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                       {String.fromCharCode(0x2460 + index)}
                     </span>
                     <input
+                      ref={(el) => {
+                        performerNameRefs.current[index] = el;
+                      }}
                       type="text"
                       value={performer.name}
                       onChange={(e) =>
