@@ -128,6 +128,7 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                 id="day"
                 value={day}
                 onChange={(e) => setDay(e.target.value)}
+                disabled ={isSubmitting}
                 required
                 className="w-[200px] h-[50px] border-[2px] rounded-[10px] border-[#CCCCCC]  px-[10px]"
               />
@@ -141,6 +142,7 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                 id="openTime"
                 value={openTime}
                 onChange={(e) => setOpenTime(e.target.value)}
+                disabled ={isSubmitting}
                 required
                 className="w-[200px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] px-[10px]"
               />
@@ -154,6 +156,7 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                 id="liveName"
                 value={liveName}
                 onChange={(e) => setLiveName(e.target.value)}
+                disabled ={isSubmitting}
                 required
                 className="w-[400px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] px-[10px]"
               />
@@ -179,6 +182,7 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                     );
                     setChargePrice(val === "" ? 0 : Number(val));
                   }}
+                  disabled ={isSubmitting}
                   required
                   className="w-[200px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] px-[10px]"
                 />
@@ -204,6 +208,7 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                     );
                     setTicketQuota(val === "" ? 0 : Number(val));
                   }}
+                  disabled ={isSubmitting}
                   required
                   className="w-[200px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] px-[10px]"
                 />
@@ -232,6 +237,7 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                         type="text"
                         value={performer.name}
                         onChange={(e) => updateName(index, e.target.value)}
+                        disabled ={isSubmitting}
                         placeholder="名前"
                         className="w-[100px] flex-1 h-full outline-none"
                       />
@@ -239,6 +245,7 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                     <button
                       type="button"
                       onClick={() => removePerformer(index)}
+                      disabled ={isSubmitting}
                       className="ml-2 text-gray-400 hover:text-red-500 text-xl leading-none"
                     >
                       ×
@@ -248,6 +255,7 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                 <button
                   type="button"
                   onClick={addPerformer}
+                  disabled ={isSubmitting}
                   className="w-[32px] h-[32px] border-[2px] border-[#CCCCCC] rounded-full text-base text-gray-500 hover:bg-gray-100 self-center"
                 >
                   +
@@ -276,11 +284,13 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                       }
                       placeholder="名前"
                       className="flex-1 w-[100px] h-full outline-none"
+                      disabled ={isSubmitting}
                     />
                     {index > 0 && (
                       <button
                         type="button"
                         onClick={() => removePerformerItem(index)}
+                        disabled ={isSubmitting}
                         className="text-gray-400 hover:text-red-500 text-xl leading-none"
                       >
                         ×
