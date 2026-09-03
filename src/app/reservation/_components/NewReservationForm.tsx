@@ -292,6 +292,7 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
               <button
                 type="button"
                 onClick={addPerformerItem}
+                disabled={isSubmitting}
                 className="w-[32px] h-[32px] border-[2px] border-[#CCCCCC] rounded-full text-base text-gray-500 hover:bg-gray-100 self-center"
               >
                 +

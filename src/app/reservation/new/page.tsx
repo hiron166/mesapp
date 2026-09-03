@@ -8,9 +8,11 @@ import {
 } from "../_components/NewReservationForm";
 import { useSupabaseSession } from "@/app/_hooks/useSupabaseSession";
 import { useRouter } from "next/navigation";
+import { useRouteGuard } from "@/app/_hooks/useRouteGuard";
 import { toast } from "react-hot-toast";
 
 export default function NewReservationPage() {
+  const { session } = useRouteGuard();
   const { token } = useSupabaseSession();
   const router = useRouter();
   const [day, setDay] = useState("");
@@ -69,6 +71,8 @@ export default function NewReservationPage() {
       setIsSubmitting(false);
     }
   };
+  // 認可してない時に一瞬も描画されないようにするもの
+  if (!session) return null;
 
   return (
     <div>
