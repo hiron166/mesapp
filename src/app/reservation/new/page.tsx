@@ -1,42 +1,52 @@
 "use client";
 
-import { useState } from "react";
-import {
-  FellowPerformer,
-  Performer,
-  NewReservationForm,
-} from "../_components/NewReservationForm";
+import { NewReservationForm } from "../_components/NewReservationForm";
 import { useSupabaseSession } from "@/app/_hooks/useSupabaseSession";
 import { useRouter } from "next/navigation";
 import { useRouteGuard } from "@/app/_hooks/useRouteGuard";
-import { toast } from "react-hot-toast";
+
+import { useForm } from "react-hook-form";
+
+type FormValues = {
+  day: string;
+  openTime: string;
+  liveName: string;
+  chargePrice: number;
+  ticketQuota: number;
+  fellowPerformers: { role: string; name: string }[];
+  performers: { role: string; name: string }[];
+};
 
 export default function NewReservationPage() {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = useForm<FormValues>({
+    defaultValues: {
+      day: "",
+      openTime: "",
+      liveName: "",
+      chargePrice: 0,
+      ticketQuota: 0,
+      fellowPerformers: [
+        { role: "カンテ", name: "" },
+        { role: "ギター", name: "" },
+        { role: "バイオリン", name: "" },
+      ],
+      performers: [{ role: "", name: "" }],
+    },
+  });
   const { session } = useRouteGuard();
   const { token } = useSupabaseSession();
   const router = useRouter();
-  const [day, setDay] = useState("");
-  const [openTime, setOpenTime] = useState("");
-  const [liveName, setLiveName] = useState("");
-  const [chargePrice, setChargePrice] = useState(0);
-  const [ticketQuota, setTicketQuota] = useState(0);
-  const [fellowPerformers, setFellowPerformers] = useState<FellowPerformer[]>([
-    { role: "カンテ", name: "" },
-    { role: "ギター", name: "" },
-    { role: "バイオリン", name: "" },
-  ]);
-  const [performers, setPerformers] = useState<Performer[]>([
-    { role: "", name: "" },
-  ]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: FormValues) => {
     if (!token) {
-      toast.error("認証トークンが必要です");
+      alert("認証トークンが必要です");
       return;
     }
-    setIsSubmitting(true);
     try {
       const response = await fetch("/api/live_infos", {
         method: "POST",
@@ -46,53 +56,38 @@ export default function NewReservationPage() {
         },
         body: JSON.stringify({
           liveInfo: {
-            day,
-            openTime,
-            liveName,
-            chargePrice,
-            ticketQuota,
+            day: data.day,
+            openTime: data.openTime,
+            liveName: data.liveName,
+            chargePrice: data.chargePrice,
+            ticketQuota: data.ticketQuota,
           },
-          fellowPerformers,
-          performers,
+          fellowPerformers: data.fellowPerformers,
+          performers: data.performers,
         }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        toast.error(errorData.status || "ライブ情報の作成に失敗しました");
+        alert(errorData.status || "ライブ情報の作成に失敗しました");
         return;
       }
 
-      toast.success("ライブ情報を作成しました");
+      alert("ライブ情報を作成しました");
       router.push("/reservation");
     } catch {
-      toast.error("ライブ情報の作成に失敗しました");
-    } finally {
-      setIsSubmitting(false);
+      alert("ライブ情報の作成に失敗しました");
     }
   };
-  // 認可してない時に一瞬も描画されないようにするもの
-  if (!session) return null;
 
+  if (!session) return null;
   return (
     <div>
       <NewReservationForm
         mode="new"
-        day={day}
-        setDay={setDay}
-        openTime={openTime}
-        setOpenTime={setOpenTime}
-        liveName={liveName}
-        setLiveName={setLiveName}
-        chargePrice={chargePrice}
-        setChargePrice={setChargePrice}
-        ticketQuota={ticketQuota}
-        setTicketQuota={setTicketQuota}
-        fellowPerformers={fellowPerformers}
-        setFellowPerformers={setFellowPerformers}
-        performers={performers}
-        setPerformers={setPerformers}
-        onSubmit={handleSubmit}
+        register={register}
+        control={control}
+        onSubmit={handleSubmit(onSubmit)}
         isSubmitting={isSubmitting}
       />
     </div>
