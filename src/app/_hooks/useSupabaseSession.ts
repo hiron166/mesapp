@@ -16,6 +16,15 @@ export const useSupabaseSession = () => {
       setIsLoading(false)
     }
     fetcher()
+
+    //セッション変更の監視
+    const {data:{subscription},} = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+      setToken(session?.access_token || null)
+      setIsLoading(false)
+    })
+
+    return () => subscription.unsubscribe()
   },[])
 
   return { session, token, isLoading }
