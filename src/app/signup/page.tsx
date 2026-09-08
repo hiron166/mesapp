@@ -15,15 +15,15 @@ export default function SignupPage() {
     formState: { errors, isSubmitting },
   } = useForm<AuthFormData>({ mode: "onChange" });
 
-  const onSubmit: SubmitHandler<AuthFormData> = async (data) => {
-    if (data.password !== data.passwordConfirm) {
+  const onSubmit: SubmitHandler<AuthFormData> = async (formData) => {
+    if (formData.password !== formData.passwordConfirm) {
       alert("パスワードが一致しません");
       return;
     }
 
     const { error } = await supabase.auth.signUp({
-      email: data.email,
-      password: data.password,
+      email: formData.email,
+      password: formData.password,
       options: {
         emailRedirectTo: `http://localhost:3000/login`,
       },

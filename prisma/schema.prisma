@@ -48,8 +48,8 @@ model User {
 //ライブ登録テーブル
 model LiveInfo {
   id            Int       @id @default(autoincrement())
-  day           Int
-  openTime      Int
+  day           String
+  openTime      String
   liveName      String
   chargePrice   Int
   ticketQuota   Int

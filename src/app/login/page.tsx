@@ -17,10 +17,10 @@ export default function LoginPage() {
     formState: { errors, isSubmitting },
   } = useForm<AuthFormData>({ mode: "onChange" });
 
-  const onSubmit: SubmitHandler<AuthFormData> = async (data) => {
+  const onSubmit: SubmitHandler<AuthFormData> = async (formData) => {
     const { error } = await supabase.auth.signInWithPassword({
-      email: data.email,
-      password: data.password,
+      email: formData.email,
+      password: formData.password,
     });
 
     if (error) {
