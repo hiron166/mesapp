@@ -4,7 +4,6 @@ import React, { useRef, useEffect } from "react";
 import { ButtonComponent } from "../../_components/Button";
 import {
   UseFormRegister,
-  // UseFormHandleSubmit,
   Controller,
   Control,
   useFieldArray,
@@ -231,7 +230,7 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
                   type="button"
                   onClick={() => appendFellowPerformer({ role: "", name: "" })}
                   disabled={isSubmitting}
-                  className="w-[32px] h-[32px] border-[2px] border-[#CCCCCC] rounded-full text-base text-gray-500 hover:bg-gray-100 self-center"
+                  className="w-[32px] h-[32px] border-[2px] border-[#CCCCCC] rounded-xl text-base text-gray-500 hover:bg-gray-100 self-center"
                 >
                   +
                 </button>

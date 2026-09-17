@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
 export const GET = async () => {
   try {
     const liveInfos = await prisma.liveInfo.findMany({
-      orderBy: { day: "desc" },
+      orderBy: { day: "asc" },
       include: {
         reservations: true,
         performers: true,
