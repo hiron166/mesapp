@@ -22,6 +22,7 @@ export default function ReservationPage() {
     },
   });
   const keyword = watch("keyword").trim().toLowerCase();
+  const digitKeyword = keyword.replace(/[^0-9]/g, ""); // 数字以外の文字を削除
 
   useEffect(() => {
     const fetcher = async () => {
@@ -42,11 +43,21 @@ export default function ReservationPage() {
   const filtered = liveInfos.filter((live) => {
     if (keyword === "") return true;
     const targets = [
+      live.day,
       live.liveName,
       ...live.performers.map((p) => p.name),
       ...live.fellowPerformers.map((fp) => fp.name),
     ];
-    return targets.some((target) => target.toLowerCase().includes(keyword));
+    if (targets.some((target) => target.toLowerCase().includes(keyword)))
+      return true; // 数字が含まれている場合はtrueを返す
+
+    if (digitKeyword === "") return false; // 数字が含まれていない場合はfalseを返す
+    const [year, month, day] = live.day.split("-");
+    const formattedDate = [
+      `${year}${month}${day}`,  // 2026-01-01 -> 20260101
+      `${year}${Number(month)}${Number(day)}`, // 2026-01-01 -> 202611
+    ];
+    return formattedDate.some((date) => date.includes(digitKeyword)); // 数字が含まれている場合はtrueを返す
   });
 
   if (!session) return null;

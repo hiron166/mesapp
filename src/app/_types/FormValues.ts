@@ -1,6 +1,7 @@
 export type FormValues = {
   day: string;
   openTime: string;
+  startTime: string;
   liveName: string;
   chargePrice: number;
   ticketQuota: number;

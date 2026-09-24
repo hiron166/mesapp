@@ -108,6 +108,19 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
               />
             </div>
             <div>
+              <label htmlFor="startTime" className="block text-xl">
+                開演時間
+              </label>
+              <input
+                type="time"
+                id="startTime"
+                disabled={isSubmitting}
+                required
+                {...register("startTime")}
+                className="w-[200px] h-[50px] border-[2px] border-[#CCCCCC] rounded-[10px] px-[10px]"
+              />
+            </div>
+            <div>
               <label htmlFor="liveName" className="block text-xl">
                 企画名
               </label>

@@ -28,20 +28,28 @@ export const ReservationList = ({
   return (
     <table className="w-full">
       <thead>
-        <tr className="grid grid-cols-[10%_20%_20%_50%] bg-[#01B285] text-white">
-          <th className="text-left p-2 border-b text-center">No.</th>
-          <th className="text-left p-2 border-b text-center">日付</th>
-          <th className="text-left p-2 border-b text-center">開場時間</th>
-          <th className="text-left p-2 border-b text-center">ライブ名</th>
+        <tr className="grid grid-cols-[30%_20%_50%] bg-[#01B285] text-white">
+          {/* <th className="p-2 border-b text-center">No.</th> */}
+          <th className=" p-2 border-b text-center">日付</th>
+          <th className=" p-2 border-b text-center">開場時間</th>
+          <th className=" p-2 border-b text-center">ライブ名</th>
         </tr>
       </thead>
       <tbody>
         {liveInfos.map((liveInfo) => (
-          <tr key={liveInfo.id} className="grid grid-cols-[10%_20%_20%_50%]">
-            <td className="text-left p-2 border-b text-center">{liveInfo.id}</td>
-            <td className="text-left p-2 border-b text-center">{liveInfo.day}</td>
-            <td className="text-left p-2 border-b text-center">{liveInfo.openTime}</td>
-            <td className="text-left p-2 border-b text-center">{liveInfo.liveName}</td>
+          <tr key={liveInfo.id} className="grid grid-cols-[30%_20%_50%]">
+            {/* <td className="p-2 border-b text-center"> */}
+              {/* {liveInfo.id} */}
+            {/* </td> */}
+            <td className="p-2 border-b text-center">
+              {liveInfo.day}
+            </td>
+            <td className="p-2 border-b text-center">
+              {liveInfo.openTime}
+            </td>
+            <td className="p-2 border-b text-center">
+              {liveInfo.liveName}
+            </td>
           </tr>
         ))}
       </tbody>

@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
 export const GET = async () => {
   try {
     const liveInfos = await prisma.liveInfo.findMany({
-      orderBy: { day: "asc" },
+      orderBy: [{ day: "asc" }, { openTime: "asc" }],
       include: {
         reservations: true,
         performers: true,
@@ -32,6 +32,7 @@ type LiveInfoBody = {
   liveInfo: {
     day: string;
     openTime: string;
+    startTime: string;
     liveName: string;
     chargePrice: number;
     ticketQuota: number;
@@ -84,6 +85,7 @@ export const POST = async (req: NextRequest) => {
       data: {
         day: liveInfo.day,
         openTime: liveInfo.openTime,
+        startTime: liveInfo.startTime,
         liveName: liveInfo.liveName,
         chargePrice: liveInfo.chargePrice,
         ticketQuota: liveInfo.ticketQuota,
