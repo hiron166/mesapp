@@ -50,6 +50,7 @@ model LiveInfo {
   id            Int       @id @default(autoincrement())
   day           String
   openTime      String
+  startTime     String    @default("")
   liveName      String
   chargePrice   Int
   ticketQuota   Int
