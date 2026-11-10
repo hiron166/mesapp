@@ -42,6 +42,7 @@ export default function ReservationPage() {
 
   const filtered = liveInfos.filter((live) => {
     if (keyword === "") return true;
+    // ① 文字で検索（日付・企画名・出演者・共演者）
     const targets = [
       live.day,
       live.liveName,
@@ -49,15 +50,16 @@ export default function ReservationPage() {
       ...live.fellowPerformers.map((fp) => fp.name),
     ];
     if (targets.some((target) => target.toLowerCase().includes(keyword)))
-      return true; // 数字が含まれている場合はtrueを返す
+      return true; // 文字でヒットしたらここで確定
 
-    if (digitKeyword === "") return false; // 数字が含まれていない場合はfalseを返す
+    // ② 日付で検索（区切り文字を無視して数字だけで比較）
+    if (digitKeyword === "") return false; // 数字を含まない入力なら日付検索は不要
     const [year, month, day] = live.day.split("-");
     const formattedDate = [
-      `${year}${month}${day}`,  // 2026-01-01 -> 20260101
-      `${year}${Number(month)}${Number(day)}`, // 2026-01-01 -> 202611
+      `${year}${month}${day}`, // 2026-01-01 -> 20260101（0埋めあり）
+      `${year}${Number(month)}${Number(day)}`, // 2026-01-01 -> 202611（0埋めなし）
     ];
-    return formattedDate.some((date) => date.includes(digitKeyword)); // 数字が含まれている場合はtrueを返す
+    return formattedDate.some((date) => date.includes(digitKeyword));
   });
 
   if (!session) return null;
