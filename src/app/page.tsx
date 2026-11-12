@@ -9,22 +9,23 @@ export default function Home() {
         <Image
           src="/images/logo.jpg"
           alt="MesApp Logo"
-          width={295}
-          height={64}
+          width={600}
+          height={130}
           priority
-          className="mb-[45px]"
+          className="mb-[17px]"
         />
       </div>
-      <h1 className="text-[32px] font-regular text-black tracking-[0.1em] mb-[25px]">
+      <h1 className="text-[50px] font-regular text-black tracking-[0.1em] mb-[30px]">
         〜業務管理を感覚的に〜
       </h1>
-      <div className="text-[20px] font-regular text-black tracking-[0.03em] ml-auto mr-auto text-center mb-[65px]">
-        <p>予約管理・座席管理をもっとわかりやすく、</p>
-        <p>感覚的に操作できる業務管理アプリです。</p>
+      <div className="text-[20px] font-regular text-black tracking-[0.03em] ml-auto mr-auto text-center mb-[55px]">
+        <p>
+          予約管理・座席管理をもっとわかりやすく、感覚的に操作できる業務管理アプリです。
+        </p>
       </div>
       <div className="flex space-x-[35px]">
         <TopPageButton buttonText="ログイン" linkHref="/login" />
-        <TopPageButton buttonText="新規登録" linkHref="/signup" />
+        <TopPageButton buttonText="サインアップ" linkHref="/signup" />
       </div>
     </div>
   );
