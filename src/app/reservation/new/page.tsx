@@ -4,18 +4,18 @@ import { NewReservationForm } from "../_components/NewReservationForm";
 import { useSupabaseSession } from "@/app/_hooks/useSupabaseSession";
 import { useRouter } from "next/navigation";
 import { useRouteGuard } from "@/app/_hooks/useRouteGuard";
-
+import { FormValues } from "@/app/_types/FormValues";
 import { useForm } from "react-hook-form";
 
-type FormValues = {
-  day: string;
-  openTime: string;
-  liveName: string;
-  chargePrice: number;
-  ticketQuota: number;
-  fellowPerformers: { role: string; name: string }[];
-  performers: { role: string; name: string }[];
-};
+// type FormValues = {
+//   day: string;
+//   openTime: string;
+//   liveName: string;
+//   chargePrice: number;
+//   ticketQuota: number;
+//   fellowPerformers: { role: string; name: string }[];
+//   performers: { role: string; name: string }[];
+// };
 
 export default function NewReservationPage() {
   const {
@@ -27,6 +27,7 @@ export default function NewReservationPage() {
     defaultValues: {
       day: "",
       openTime: "",
+      startTime: "",
       liveName: "",
       chargePrice: 0,
       ticketQuota: 0,
@@ -58,6 +59,7 @@ export default function NewReservationPage() {
           liveInfo: {
             day: data.day,
             openTime: data.openTime,
+            startTime: data.startTime,
             liveName: data.liveName,
             chargePrice: data.chargePrice,
             ticketQuota: data.ticketQuota,

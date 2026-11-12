@@ -50,6 +50,7 @@ model LiveInfo {
   id            Int       @id @default(autoincrement())
   day           String
   openTime      String
+  startTime     String    @default("")
   liveName      String
   chargePrice   Int
   ticketQuota   Int
@@ -57,7 +58,7 @@ model LiveInfo {
   updatedAt     DateTime  @updatedAt
 
   // リレーション定義
-  reservations      Reservation[]
+  lives      Live[]
   fellowPerformers   FellowPerformer[]
   performers        Performer[]
 }
@@ -90,7 +91,7 @@ model Performer {
 
 
 //予約リストテーブル
-model Reservation {
+model Live {
   id               Int      @id @default(autoincrement())
   liveId           Int
   customerName     String
@@ -137,7 +138,7 @@ model ReservationSeat {
   updatedAt       DateTime  @updatedAt
 
   // リレーション定義
-  reservation     Reservation   @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  live     Live   @relation(fields: [reservationId], references: [id], onDelete: Cascade)
   seat            Seat          @relation(fields: [seatId], references: [id], onDelete: Cascade)
 
   //重複防止
@@ -167,7 +168,7 @@ model ReservationMenu {
   updatedAt       DateTime  @updatedAt
 
   // リレーション定義
-  reservation     Reservation   @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  live     Live   @relation(fields: [reservationId], references: [id], onDelete: Cascade)
   menu            Menu          @relation(fields: [menuId], references: [id], onDelete: Cascade)
 
   //重複防止
@@ -183,5 +184,5 @@ model Staff {
   updatedAt       DateTime  @updatedAt
 
   // リレーション定義
-  reservations      Reservation[]
+  lives      Live[]
 }
