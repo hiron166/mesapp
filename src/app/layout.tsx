@@ -1,7 +1,7 @@
 "use client";
 
 import "./globals.css";
-// import { Header } from "./_components/Header";
+import { Header } from "./_components/Header";
 
 export default function RootLayout({
   children,
@@ -10,7 +10,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className="font-sans overflow-hidden">
+      <body className="font-sans min-h-screen">
+        <Header />
         <div>{children}</div>
       </body>
     </html>

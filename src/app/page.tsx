@@ -25,7 +25,7 @@ export default function Home() {
       </div>
       <div className="flex space-x-[35px]">
         <TopPageButton buttonText="ログイン" linkHref="/login" />
-        <TopPageButton buttonText="サインアップ" linkHref="/signup" />
+        <TopPageButton buttonText="新規登録" linkHref="/signup" />
       </div>
     </div>
   );

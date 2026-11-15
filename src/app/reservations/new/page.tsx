@@ -7,16 +7,6 @@ import { useRouteGuard } from "@/app/_hooks/useRouteGuard";
 import { FormValues } from "@/app/_types/FormValues";
 import { useForm } from "react-hook-form";
 
-// type FormValues = {
-//   day: string;
-//   openTime: string;
-//   liveName: string;
-//   chargePrice: number;
-//   ticketQuota: number;
-//   fellowPerformers: { role: string; name: string }[];
-//   performers: { role: string; name: string }[];
-// };
-
 export default function NewReservationPage() {
   const {
     register,

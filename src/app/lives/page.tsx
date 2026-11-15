@@ -71,7 +71,7 @@ export default function ReservationPage() {
           <div className="flex justify-between items-start mt-[30px] ">
             <h1 className="text-[40px] mb-[60px]">ライブ一覧</h1>
             <Link
-              href="/reservation/new"
+              href="/reservations/new"
               className="bg-[#DC143C] text-white px-4 py-2 rounded-xl hover:bg-[#DC143C]/80 transition-colors duration-300"
             >
               新規ライブ登録

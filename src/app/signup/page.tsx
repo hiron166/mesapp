@@ -45,7 +45,7 @@ export default function SignupPage() {
         className="space-y-4 w-full max-w-[600px]"
       >
         <h1 className="flex justify-center text-[36px] mb-[30px] text-[#DC143C]">
-          Signup
+          新規登録
         </h1>
 
         <InputComponent<AuthFormData>
@@ -109,6 +109,12 @@ export default function SignupPage() {
           submittingText="新規登録中..."
           defaultText="新規登録"
         />
+        <p className="text-center text-[16px] text-gray-500">
+          既にアカウントをお持ちの方はこちら→{" "}
+          <a href="/login" className="text-[#DC143C] hover:underline">
+            ログイン
+          </a>
+        </p>
       </form>
     </div>
   );
