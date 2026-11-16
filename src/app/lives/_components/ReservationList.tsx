@@ -27,7 +27,7 @@ export const ReservationList = ({
 
   return (
     <table className="w-full">
-      <thead>
+      <thead className="sticky top-0">
         <tr className="grid grid-cols-[30%_20%_50%] bg-[#01B285] text-white">
           <th className="p-2 border-b text-center">日付</th>
           <th className="p-2 border-b text-center">開場時間</th>

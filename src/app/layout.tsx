@@ -10,9 +10,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className="font-sans overflow-hidden">
+      <body className="font-sans min-h-screen">
         <Header />
-        <div className="pt-[75px]">{children}</div>
+        <div>{children}</div>
       </body>
     </html>
   );

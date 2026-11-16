@@ -37,9 +37,12 @@ export default function ResetPasswordPage() {
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-4 w-full max-w-[600px]"
       >
-        <h1 className="flex justify-center text-[36px] mb-[30px] text-[#DC143C]">
-          パスワードを忘れた場合
+        <h1 className="flex justify-center text-[40px] mb-[10px] text-[#DC143C]">
+          パスワードの再設定
         </h1>
+        <p className="text-[20px] text-gray-500  mb-[20px] text-center">
+          登録しているメールアドレスを入力してください
+        </p>
 
         <InputComponent<AuthFormData>
           {...register}
@@ -69,6 +72,11 @@ export default function ResetPasswordPage() {
           submittingText="送信中..."
           defaultText="送信"
         />
+        <p className="text-center text-[16px] text-gray-500">
+          <a href="/" className="hover:text-[#DC143C] hover:underline">
+            ←TOPに戻る
+          </a>
+        </p>
       </form>
     </div>
   );
