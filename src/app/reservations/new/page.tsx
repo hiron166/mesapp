@@ -66,7 +66,7 @@ export default function NewReservationPage() {
       }
 
       alert("ライブ情報を作成しました");
-      router.push("/reservation");
+      router.push("/lives");
     } catch {
       alert("ライブ情報の作成に失敗しました");
     }

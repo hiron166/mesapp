@@ -66,8 +66,8 @@ export default function ReservationPage() {
 
   return (
     <>
-      <div className="mx-[75px]">
-        <div>
+      <div className="mx-[75px] pb-6 flex flex-col h-screen overflow-hidden overscroll-none">
+        <div className="shrink-0">
           <div className="flex justify-between items-start mt-[30px] ">
             <h1 className="text-[40px] mb-[60px]">ライブ一覧</h1>
             <Link
@@ -86,7 +86,9 @@ export default function ReservationPage() {
             className="w-full h-[30px] mb-[10px] border border-[#cccccc] rounded-xl text-center bg-[#cccccc]/50 "
           />
         </div>
-        <ReservationList liveInfos={filtered} isLoading={isLoading} />
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-none">
+          <ReservationList liveInfos={filtered} isLoading={isLoading} />
+        </div>
       </div>
     </>
   );
