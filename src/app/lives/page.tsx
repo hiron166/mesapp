@@ -69,7 +69,7 @@ export default function ReservationPage() {
       <div className="mx-[75px] pb-6 flex flex-col h-screen overflow-hidden overscroll-none">
         <div className="shrink-0">
           <div className="flex justify-between items-start mt-[30px] ">
-            <h1 className="text-[40px] mb-[60px]">ライブ一覧</h1>
+            <h1 className="text-[40px] mb-[50px]">ライブ一覧</h1>
             <Link
               href="/reservations/new"
               className="bg-[#DC143C] text-white px-4 py-2 rounded-xl hover:bg-[#DC143C]/80 transition-colors duration-300"

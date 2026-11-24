@@ -78,9 +78,9 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
   return (
     <form onSubmit={onSubmit}>
       <div className="my-[30px] mx-[75px]">
-        <h1 className="text-[40px] mb-[60px]">ライブ登録</h1>
+        <h1 className="text-[40px] mb-[50px]">ライブ登録</h1>
         <div>
-          <div className="flex items-center gap-[80px] mb-[40px]">
+          <div className="flex items-center gap-[80px] mb-[50px]">
             <div className="">
               <label htmlFor="day" className="block text-xl">
                 日付
@@ -134,7 +134,7 @@ export const NewReservationForm: React.FC<NewReservationFormProps> = ({
               />
             </div>
           </div>
-          <div className="flex items-start gap-[80px] mb-[40px]">
+          <div className="flex items-start gap-[80px] mb-[50px]">
             <div>
               <label htmlFor="chargePrice" className="block text-xl">
                 チャージ

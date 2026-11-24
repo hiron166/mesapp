@@ -74,7 +74,7 @@ export default function NewReservationPage() {
 
   if (!session) return null;
   return (
-    <div>
+    <div className="h-screen overflow-hidden overscroll-none">
       <NewReservationForm
         mode="new"
         register={register}
