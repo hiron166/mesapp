@@ -27,7 +27,7 @@ export default function LoginPage() {
       alert("ログインに失敗しました");
     } else {
       reset();
-      router.replace("/dashboard");
+      router.replace("/lives");
     }
   };
 
@@ -38,7 +38,7 @@ export default function LoginPage() {
         className="space-y-4 w-full max-w-[600px]"
       >
         <h1 className="flex justify-center text-[36px] mb-[30px] text-[#DC143C]">
-          Login
+          ログイン
         </h1>
         <InputComponent<AuthFormData>
           {...register}
@@ -86,12 +86,18 @@ export default function LoginPage() {
           defaultText="ログイン"
         />
         <div className="text-center">
-          <Link
-            href="/reset_password"
-            className="inline-block underline text-sm font-medium text-gray-900 hover:text-[#DC143C] transition-colors duration-300"
-          >
-            パスワードを忘れた方はこちら
-          </Link>
+          <p className="text-[16px] text-gray-500">
+            アカウントをお持ちでない方はこちら→{" "}
+            <Link href="/signup" className="text-[#DC143C] hover:underline">
+              新規登録
+            </Link>
+          </p>
+          <p className="text-[16px] text-gray-500">
+            パスワードお忘れの方はこちら→{" "}
+            <Link href="/reset_password" className="text-[#DC143C] hover:underline">
+              再設定
+            </Link>
+          </p>
         </div>
       </form>
     </div>

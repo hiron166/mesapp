@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { AuthFormData } from "../_types/AuthFormData";
 import { InputComponent } from "../_components/Input";
 import { ButtonComponent } from "../_components/Button";
+import Link from "next/link";
 
 export default function SignupPage() {
   const {
@@ -45,7 +46,7 @@ export default function SignupPage() {
         className="space-y-4 w-full max-w-[600px]"
       >
         <h1 className="flex justify-center text-[36px] mb-[30px] text-[#DC143C]">
-          Signup
+          新規登録
         </h1>
 
         <InputComponent<AuthFormData>
@@ -109,6 +110,12 @@ export default function SignupPage() {
           submittingText="新規登録中..."
           defaultText="新規登録"
         />
+        <p className="text-center text-[16px] text-gray-500">
+          既にアカウントをお持ちの方はこちら→{" "}
+          <Link href="/login" className="text-[#DC143C] hover:underline">
+            ログイン
+          </Link>
+        </p>
       </form>
     </div>
   );

@@ -7,16 +7,6 @@ import { useRouteGuard } from "@/app/_hooks/useRouteGuard";
 import { FormValues } from "@/app/_types/FormValues";
 import { useForm } from "react-hook-form";
 
-// type FormValues = {
-//   day: string;
-//   openTime: string;
-//   liveName: string;
-//   chargePrice: number;
-//   ticketQuota: number;
-//   fellowPerformers: { role: string; name: string }[];
-//   performers: { role: string; name: string }[];
-// };
-
 export default function NewReservationPage() {
   const {
     register,
@@ -76,7 +66,7 @@ export default function NewReservationPage() {
       }
 
       alert("ライブ情報を作成しました");
-      router.push("/reservation");
+      router.push("/lives");
     } catch {
       alert("ライブ情報の作成に失敗しました");
     }
@@ -84,7 +74,7 @@ export default function NewReservationPage() {
 
   if (!session) return null;
   return (
-    <div>
+    <div className="h-screen overflow-hidden overscroll-none">
       <NewReservationForm
         mode="new"
         register={register}
