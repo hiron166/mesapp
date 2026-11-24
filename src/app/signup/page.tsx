@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { AuthFormData } from "../_types/AuthFormData";
 import { InputComponent } from "../_components/Input";
 import { ButtonComponent } from "../_components/Button";
+import Link from "next/link";
 
 export default function SignupPage() {
   const {
@@ -111,9 +112,9 @@ export default function SignupPage() {
         />
         <p className="text-center text-[16px] text-gray-500">
           既にアカウントをお持ちの方はこちら→{" "}
-          <a href="/login" className="text-[#DC143C] hover:underline">
+          <Link href="/login" className="text-[#DC143C] hover:underline">
             ログイン
-          </a>
+          </Link>
         </p>
       </form>
     </div>
